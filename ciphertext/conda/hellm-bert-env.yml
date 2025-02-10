@@ -1,0 +1,23 @@
+name: hellm-bert
+channels:
+  - nvidia/label/cuda-12.1.0
+  - conda-forge
+  - pytorch
+dependencies:
+  - sysroot_linux-64=2.17
+  - cuda-minimal-build
+  - libcurand-dev
+  - cuda-cudart-static
+  - nccl=2.19.4.1
+  - c-compiler=1.5.1
+  - cxx-compiler=1.5.1
+  - clang=14
+  - clangxx=14
+  - clang-tools=14
+  - llvm-openmp=14
+  - openmpi-mpicxx
+  - cmake=3.21
+  - pre-commit
+  - pytorch=2.1.2
+  - pytorch-cuda=12.1
+  - sentencepiece=0.1.99
