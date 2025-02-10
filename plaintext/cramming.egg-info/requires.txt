@@ -1,0 +1,13 @@
+torch>=2.0.0
+hydra-core>=1.1
+datasets
+tokenizers
+transformers
+evaluate
+scipy
+scikit-learn
+pynvml
+psutil
+einops
+safetensors
+zstandard

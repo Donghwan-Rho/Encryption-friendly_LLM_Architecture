@@ -1,0 +1,43 @@
+# Instantiates a (non-huggingface) scriptable encoder-based LM with BERT as baselin
+# Original BERT
+
+# These are the huggingface bert parameters
+architectures:
+  - ScriptableMaskedLM
+
+num_transformer_layers: 12
+hidden_size: 768
+intermed_size: 3072
+hidden_dropout_prob: 0.1
+
+norm: LayerNorm
+norm_eps: 1e-12
+norm_scheme: post # can be "pre", "post", "sandwich"
+nonlin: GELU
+
+tie_weights: True # Tie input/output embedding
+sparse_prediction: False # Whether to predict only on masked tokens
+decoder_bias: True # Whether to include a bias in the decoding step
+loss: cross-entropy
+z_loss_factor: 0
+gradient_checkpointing: False
+layer_fusion: False # Fuse transformer layer residual structure
+
+embedding:
+  vocab_size: # will be populated automatically
+  pos_embedding: learned
+  dropout_prob: 0.1 # equal to hidden_dropout_prob in BERT
+  pad_token_id: 0
+  max_seq_length: 512 # max seq length that the positional embedding is instantiated for
+  embedding_dim: ${arch.hidden_size} # can be smaller than hidden size (this is the ALBERT trick)
+  normalization: True
+
+attention:
+  type: self-attention
+  causal_attention: False0tically filled in for downstream
+classification_head:
+  pooler: zero_index
+  include_ff_layer: True
+  head_dim: ${arch.hidden_size}
+  nonlin: Tanh
+  classifier_dropout: ${arch.hidden_dropout_prob}

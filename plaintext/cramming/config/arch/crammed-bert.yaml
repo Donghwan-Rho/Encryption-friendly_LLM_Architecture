@@ -1,0 +1,169 @@
+# Instantiates a (non-huggingface) scriptable encoder-based LM with BERT as baseline
+# Modernized version of bert-c5
+
+# These are the huggingface bert parameters
+architectures:
+  # - ScriptableCrammedBERT
+  - ScriptableCrammedBERT-modified
+  # - ScriptableCrammedBERT-grad
+
+experiment_float64: False
+dropout_on: True
+
+num_transformer_layers: 2
+hidden_size: 768
+# hidden_size: 256
+intermed_size: 3072
+# intermed_size: 1024
+# intermed_size: 768
+hidden_dropout_prob: 0.1
+
+# seq_first: True
+
+qkv_each: True
+
+FFN_combined: 
+FFN_combined_ver2:
+FFN_combined_ver3: 
+combined_FFN_multiple:
+num_combined_heads:
+
+block_matmul: False
+block_num: 2
+
+FFN_small: 
+
+larger_embedding: 
+larger_embedding_dim: 
+# final_norm_outLM:
+
+distillation: False
+teacher_layers: 4
+student_layers: 2
+teacher_dim: 768
+teacher_intermed_size: 3072
+student_dim: 512
+student_intermed_size: 2048
+teacher_num_attention_heads: 8
+student_num_attention_heads: 8
+
+get_input_range: True
+get_grad: False
+
+graph_interval: 10000
+eval_graph_interval: 500
+
+is_train: 
+train_norm: LayerNorm
+train_nonlin: ReLUglu
+eval_norm: LayerNorm
+# eval_norm: LayerNorm
+eval_nonlin: ReLUglu
+
+norm: LayerNorm
+# norm: RMSNorm
+nonlin: ReLUglu
+# nonlin: GELUglu
+# nonlin: ReLUglu
+norm_eps: 1e-12
+norm_scheme: pre #"pre" is baked into the new implementation
+
+max_var_penalty: False
+var_ratio_penalty: False
+matmul_range_penalty: False
+var_max_penalty_scale: 100
+var_ratio_penalty_scale: 300
+matmul_norm_penalty_scale: 480
+norm_penalty_coeff: 100
+penalty_step: 664000
+full_steps: 100
+
+# emb_var_max: 0
+# emb_var_min: 0
+# emb_var_ratio_max: 0
+# emb_var_ratio_min: 0
+# final_var_max: 0
+# final_var_min: 0
+# final_var_ratio_max: 0
+# final_var_ratio_min: 0
+# before_att_var_max: []
+# before_att_var_min: []
+# before_att_var_ratio_max: []
+# before_att_var_ratio_min: []
+# before_FFN_var_max: []
+# before_FFN_var_min: []
+# before_FFN_var_ratio_max: []
+# before_FFN_var_ratio_min: []
+
+tie_weights: True # Tie input/output embedding
+decoder_bias: False # Whether to include a bias in the decoding step
+
+sparse_prediction: ${train.objective.mlm_probability} # Whether to predict only on masked tokens, and how many there will be
+loss: cross-entropy
+objective_layout: MLM # can also be SCRIPT
+
+embedding:
+  vocab_size: # will be populated automatically
+  pos_embedding: scaled-sinusoidal
+  dropout_prob: 0.1 # equal to hidden_dropout_prob in BERT
+  pad_token_id: 0
+  max_seq_length: 128 # max seq length that the positional embedding is instantiated for
+  # max_seq_length: 16
+  embedding_dim: ${arch.hidden_size} # has to be this value for crammedBERT
+  normalization: True
+  stable_low_precision: False
+  get_emb_input_range: None
+  norm_approx_div_max: 1
+
+attention:
+  # type: self-attention # also works with "pytorch"
+  type: self-attention-modified # Usage for softmax and GK
+  # type: self-attention-modified_LoRA_style # Usage for softmax and GK with LoRA style model
+  causal_attention: False
+  num_attention_heads: 12
+  dropout_prob: 0.1
+  skip_output_projection: False
+  qkv_bias: False
+  # qkv_bias: True
+  qkv_interm_dim: 128
+
+  rotary_embedding: False
+  seq_op_in_fp32: True # whether to always cast the operation over the sequence into fp32 (e.g.. the softmax in normal attn)
+
+  is_train: True
+  train_sequence_op: exp
+  # train_sequence_op: torch-softmax
+  eval_sequence_op: exp
+  # eval_sequence_op: torch-softmax
+  exp_power_deg: 16
+  # sequence_op: torch-softmax
+  # sequence_op: torch-norm
+  # sequence_op: torch-relu
+  # sequence_op: torch-relu-norm
+  # sequence_op: poly
+  # sequence_op: exp
+  # sequence_op: exp_power_app
+  # sequence_op: exp_poly_app
+  # sequence_op: exp_taylor_app
+
+init:
+  type: normal
+  std: 0.02
+
+# Experimental options:
+ffn_layer_frequency: 1 # FFN layer in every layer
+skip_head_transform: True # This is only possible if embedding_dim=hidden_size
+use_bias: False # Whether to learn biases on all dense layers
+final_norm: True # Add a final norm layer before the end
+
+# Downstream settings:
+num_labels: # This can be automatically filled in for downstream
+classification_head:
+  pooler: zero_index
+  # pooler: avg
+  include_ff_layer: True
+  head_dim: 1024
+  nonlin: Tanh
+  temperature: 1
+  # nonlin: GELU_poly_11glu
+  classifier_dropout: ${arch.hidden_dropout_prob}

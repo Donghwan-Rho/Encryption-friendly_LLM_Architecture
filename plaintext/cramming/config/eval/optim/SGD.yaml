@@ -1,0 +1,7 @@
+type: SGD
+
+lr: 2e-5  # SGD에 적합한 값으로 조정 가능
+momentum: 0.9  # AdamW의 첫 번째 beta 값을 모멘텀으로 사용
+weight_decay: 0.1  # 가중치 감소 설정 (필요에 따라 변경 가능)
+dampening: 0  # 모멘텀의 감쇠율, 일반적으로 0을 사용
+nesterov: True  # 네스테로프 모멘텀을 사용할지 여부 (True로 설정 가능)
