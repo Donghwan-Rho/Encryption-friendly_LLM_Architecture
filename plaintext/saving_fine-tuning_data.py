@@ -96,15 +96,17 @@ def main_downstream_process_modified(cfg, setup):
         ##    then, set eval_dataset = train_dataset   ##
         #################################################
         
-        os.makedirs(os.path.join(f'./fine-tuning_data', f'{task_name}_train_inputs'), exist_ok=True)
-        os.makedirs(os.path.join(f'./fine-tuning_data', f'{task_name}_train_masks'), exist_ok=True)
-        
         if cfg.eval.save_train_data:
             saving_dataset = train_dataset
             print(f'Save train data.')
+            os.makedirs(os.path.join(f'./fine-tuning_data', f'{task_name}_train_inputs'), exist_ok=True)
+            os.makedirs(os.path.join(f'./fine-tuning_data', f'{task_name}_train_masks'), exist_ok=True)            
         else:
             saving_dataset = eval_datasets[f'{task_name}']
             print(f'Save evaluation data.')
+            os.makedirs(os.path.join(f'./fine-tuning_data', f'{task_name}_eval_inputs'), exist_ok=True)
+            os.makedirs(os.path.join(f'./fine-tuning_data', f'{task_name}_eval_masks'), exist_ok=True) 
+        model.encoder.save_train_data = cfg.eval.save_train_data
             
         data_set_len = len(saving_dataset)
         print(f'The length of the dataset: {data_set_len}')

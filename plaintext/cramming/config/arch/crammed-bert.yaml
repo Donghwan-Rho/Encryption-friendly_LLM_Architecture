@@ -75,7 +75,7 @@ var_max_penalty_scale: 100
 var_ratio_penalty_scale: 300
 matmul_norm_penalty_scale: 480
 norm_penalty_coeff: 100
-penalty_step: 664000
+penalty_step: 1
 full_steps: 100
 
 # emb_var_max: 0
