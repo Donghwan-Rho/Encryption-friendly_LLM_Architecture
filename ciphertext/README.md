@@ -32,7 +32,8 @@ export HELLM_KEY_PATH=./key
 
 ## Description of running files for experiment.
 
-1. Run `convert.py` to generate a container file for HE implementation with a pre-generated train/eval dataset running in plaintext, which is saved in `plaintext/fine_tuning_data`. This file will be used in the next step and will contain appropriate input data for the HE model.
+1. Run `convert.py` to generate a container file for HE implementation with a pre-generated train/eval dataset running in plaintext, which is saved in `plaintext/fine-tuning_data/`. The file names are `taskname_eval_inputs(masks)` and `taskname_train_inputs(masks)` for the eval and train datasets, respectively. 
+These files will be used in the next step and should set appropriate input data paths to generate weights for the HE model.
 
 2. Run `convert2.cpp` to generate the HE version of the pre-trained weights. Use the pre-defined container path specified in the plaintext model and the designated output data folder. For more details, refer to the Fine-tuning explanation below.
 
