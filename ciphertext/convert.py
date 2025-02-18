@@ -153,7 +153,7 @@ def main():
     weight_path = "Set your pre-trained weight path"
 
     ####################################################################
-    #### `save_path` denotess the output weight path, which will be ####
+    #### `save_path` denotes the output weight path, which will be ####
     ####  used in the HE computation model.                         ####
     ####################################################################
     save_path = "Set output path that will be used as the same name in HE model"
