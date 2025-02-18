@@ -145,14 +145,16 @@ def convert_head_bias(weight: torch.Tensor) -> torch.Tensor:
 
 def main():
 
-    ################################################################
-    #### `weight_path` denotes the saved pre-train weight path #####
-    ################################################################
+    ###################################################################################
+    #### `weight_path` denotes the saved pre-train weight path (model.safetensors) ####
+    #### For example, weight_path = `pre-trained_weights/{your_name}',             ####
+    #### which corresponds to the defined path in plaintext running.               ####
+    ###################################################################################
     weight_path = "Set your pre-trained weight path"
 
     ####################################################################
     #### `save_path` denotess the output weight path, which will be ####
-    ####  used in the HE computation model                          ####
+    ####  used in the HE computation model.                         ####
     ####################################################################
     save_path = "Set output path that will be used as the same name in HE model"
 
