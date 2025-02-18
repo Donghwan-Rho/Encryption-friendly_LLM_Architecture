@@ -47,7 +47,7 @@ void deleteFolder(const std::string &folderPath) {
 
 int main() {
     static const std::string LORA_TYPE = "qkv";
-    const std::string weight_pth = "./data_2ly_mrpc/";
+    const std::string weight_pth = "./data_2ly_mrpc/"; // Put the HE weight path used when running convert.py.
     const int num_gpu = 8;
     const int batch_size = static_cast<int>(16.0 / num_gpu);
     // { R : RTE, C : COLA, M : MRPC, S : STSB , T: SST2}
@@ -195,7 +195,6 @@ int main() {
             if (rank == 0) {
                 deleteFolder("./backward");
                 deleteFolder("./mask");
-                // 폴더 생성
                 std::error_code ec;
                 fs::create_directory("./mask", ec);
                 fs::create_directory("./backward", ec);
