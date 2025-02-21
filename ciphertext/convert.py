@@ -145,14 +145,16 @@ def convert_head_bias(weight: torch.Tensor) -> torch.Tensor:
 
 def main():
 
-    ################################################################
-    #### `weight_path` denotes the saved pre-train weight path #####
-    ################################################################
+    ###################################################################################
+    #### `weight_path` denotes the saved pre-train weight path (model.safetensors) ####
+    #### For example, weight_path = `pre-trained_weights/{your_name}',             ####
+    #### which corresponds to the defined path in plaintext running.               ####
+    ###################################################################################
     weight_path = "Set your pre-trained weight path"
 
     ####################################################################
-    #### `save_path` denotess the output weight path, which will be ####
-    ####  used in the HE computation model                          ####
+    #### `save_path` denotes the output weight path, which will be ####
+    ####  used in the HE computation model.                         ####
     ####################################################################
     save_path = "Set output path that will be used as the same name in HE model"
 
@@ -181,18 +183,18 @@ def main():
     # SST-2: 67349
     # QNLI: 104743
 
-    ####################################################################################
-    ## Torch path should be set as the same path in grad_test.py file,                 ##
-    ## For example, since we set the train data set output path as                     ##
-    ## `mrpc_train_inputs/input(index)_2ly_mrpc.pth`, we set the path as the following ##
-    ## The train/eval data are saved in plaintext/fine_tuning_data/. So, the target    ## 
-    ## data path need to be set `plaintext/fine_tuning_data/(task)_train_input/masks/  ##
-    #####################################################################################
+    #######################################################################################
+    ## Torch path should be set as the same path in grad_test.py file,                   ##
+    ## For example, since we set the train data set output path as                       ##
+    ## `mrpc_train_inputs/input(index)_2ly_mrpc.pth`, we set the path as the following   ##
+    ## The train/eval data are saved in plaintext/fine-tuning_data/. So, the target      ## 
+    ## data path need to be set `plaintext/fine-tuning_data/(task)_train_inputs(masks)/  ##
+    #######################################################################################
 
     for i in range(0,3668):
-        inp = torch.load(f'/plaintext/fine_tuning_data/mrpc_train_inputs/input{i}_2ly_mrpc.pth')
+        inp = torch.load(f'/plaintext/fine-tuning_data/mrpc_train_inputs/input{i}_2ly_mrpc.pth')
         container.add(f'input_{i}', inp)
-        inp = torch.load(f'/plaintext/fine_tuning_data/mrpc_train_masks/mask{i}_2ly_mrpc.pth')
+        inp = torch.load(f'/plaintext/fine-tuning_data/mrpc_train_masks/mask{i}_2ly_mrpc.pth')
         container.add(f'mask_{i}', inp)
 
 
@@ -213,9 +215,9 @@ def main():
 
     #MRPC
     """ for i in range(0,408):
-        inp = torch.load(f'./plaintext/fine_tuning_data/mrpc_eval_inputs/input{i}_2ly_mrpc_eval.pth')
+        inp = torch.load(f'./plaintext/fine-tuning_data/mrpc_eval_inputs/input{i}_2ly_mrpc.pth')
         container.add(f'input_{i}', inp)
-        inp = torch.load(f'./plaintext/fine_tuning_data/mrpc_eval_masks/mask{i}_2ly_mrpc_eval.pth')
+        inp = torch.load(f'./plaintext/fine-tuning_data/mrpc_eval_masks/mask{i}_2ly_mrpc.pth')
         container.add(f'mask_{i}', inp) """
 
 
