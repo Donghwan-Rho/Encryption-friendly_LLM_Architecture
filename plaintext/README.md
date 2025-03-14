@@ -36,12 +36,12 @@ Although we fine-tune the model under HE, we also explain how to fine-tune under
 
 For full fine-tuning, run:
 ```
-python eval_128_padding.py eval=GLUE_sane name=amp_b8192_cb_o4_final eval.checkpoint=latest impl.microbatch_size=16 impl.shuffle_in_dataloader=True impl.compile_torch=False
+python eval_128_padding.py eval=GLUE_sane name={your_name} eval.checkpoint=latest impl.microbatch_size=16 impl.shuffle_in_dataloader=True impl.compile_torch=False
 ```
 
 For LoRA fine-tuning, run:
 ```
-python eval_lora_128_padding.py eval=GLUE_sane name=amp_b8192_cb_o4_final eval.checkpoint=latest impl.microbatch_size=16 impl.shuffle_in_dataloader=True impl.compile_torch=False
+python eval_lora_128_padding.py eval=GLUE_sane name={your_name} eval.checkpoint=latest impl.microbatch_size=16 impl.shuffle_in_dataloader=True impl.compile_torch=False
 ```
 
 You can adjust LoRA rank and alpha in `lora_rank` and `lora_alpha` in `cramming/config/eval/GLUE_sane`.
