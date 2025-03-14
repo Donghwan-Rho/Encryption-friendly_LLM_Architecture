@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
     // torch::save(container.attr("attngrad").toTensor(), ptxt_path +
     // "attngrad.pth");
 
-    // Q. What is the purpose?
+    /* // Q. What is the purpose?
     // torch::save(container.attr("decoder_w").toTensor(),
     //            ptxt_path + "decoder_w.pth");
     torch::save(container.attr("emb_word_w").toTensor(),
@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
     torch::save(container.attr("final_norm_w").toTensor(),
                 ptxt_path + "final_norm_w.pth");
     torch::save(container.attr("final_norm_b").toTensor(),
-                ptxt_path + "final_norm_b.pth");
+                ptxt_path + "final_norm_b.pth"); */
 
 #pragma omp parallel for
     // Caution: N_LAYER >> NUM_LAYER;
