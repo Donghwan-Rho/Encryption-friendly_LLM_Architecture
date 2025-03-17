@@ -65,6 +65,8 @@ Default:
 num_gpu = 8
 ```
 
+##### Note: All experiments were performed on 8 GPUs, so the current implementation code is also 8 GPU-oriented. Experiments with less than 8 GPUs will require modifications to the code, especially the communication between GPU parts.
+
 3. Set the batch size (`batch_size`).
 Define the batch size for fine-tuning
 
