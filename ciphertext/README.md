@@ -38,6 +38,7 @@ These files will be used in the next step and should set appropriate input data 
 2. Run `convert2.cpp` to generate the HE version of the pre-trained weights. Use the pre-defined container path specified in the plaintext model and the designated output data folder. For more details, refer to the Fine-tuning explanation below.
 
 3. Run either of the following two files:
+- **Note** All the following implemenation codes need to work on 8 GPUs. You need to add `mpirun -np 8` to the first part of your running binary file.
 
 - **3-1.** `/examples/backward-bert-multi.cpp`: Implementation code for fine-tuning.
 - **3-2.** `/examples/bert-test.cpp`: Implementation code for evaluation.
